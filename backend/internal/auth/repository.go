@@ -42,3 +42,15 @@ func GetUserIDAndRoleByEmail(email string) (string, string, error) {
 
 	return id, role, nil
 }
+
+func GetPasswordHashByEmail(email string) (string, error) {
+	query := `SELECT password FROM users WHERE email = $1`
+	row := config.DB.QueryRow(query, email)
+
+	var hash string
+	if err := row.Scan(&hash); err != nil {
+		return "", err
+	}
+
+	return hash, nil
+}

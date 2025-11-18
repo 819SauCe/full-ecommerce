@@ -13,6 +13,7 @@ func main() {
 	config.Connect(config.Postgres_uri)
 
 	http.HandleFunc("/auth/register", auth.RegisterHandler)
+	http.HandleFunc("/auth/login", auth.LoginHandler)
 
 	http.ListenAndServe(":8080", nil)
 }
