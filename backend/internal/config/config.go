@@ -10,6 +10,7 @@ import (
 
 var Postgres_uri string
 var Password_hash_key string
+var Jwt_secret string
 
 func Load() {
 	err := godotenv.Load("../../../.env")
@@ -35,5 +36,10 @@ func Load() {
 	Password_hash_key = os.Getenv("HASH_PASSWORD_KEY")
 	if Password_hash_key == "" {
 		log.Fatal("Error on loading hash password secret")
+	}
+
+	Jwt_secret = os.Getenv("JWT_SECRET")
+	if Jwt_secret == "" {
+		log.Fatal("Error on loading jwt secret")
 	}
 }

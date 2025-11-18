@@ -28,3 +28,17 @@ func RegisterUser(first, last, email, password string) error {
 	_, err = config.DB.Exec(query, first, last, email, password, role)
 	return err
 }
+
+func GetUserIDAndRoleByEmail(email string) (string, string, error) {
+	query := `SELECT id, role FROM users WHERE email = $1`
+	row := config.DB.QueryRow(query, email)
+
+	var id string
+	var role string
+
+	if err := row.Scan(&id, &role); err != nil {
+		return "", "", err
+	}
+
+	return id, role, nil
+}

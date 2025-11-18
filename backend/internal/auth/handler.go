@@ -2,6 +2,7 @@ package auth
 
 import (
 	"encoding/json"
+	"full-ecommerce/internal/helpers"
 	"net/http"
 )
 
@@ -23,6 +24,19 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	id, role, err := GetUserIDAndRoleByEmail(body.Email)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	token, err := helpers.GenerateToken(id, role)
+	if err != nil {
+		http.Error(w, "error generating token", http.StatusInternalServerError)
+		return
+	}
+
+	helpers.SetAuthCookie(w, token)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode(map[string]any{
