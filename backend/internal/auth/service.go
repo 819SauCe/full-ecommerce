@@ -1,32 +1,9 @@
 package auth
 
 import (
-	"errors"
 	"fmt"
 	"full-ecommerce/internal/helpers"
 )
-
-var (
-	ErrInvalidFirstName   = errors.New("invalid_first_name")
-	ErrInvalidLastName    = errors.New("invalid_last_name")
-	ErrInvalidEmail       = errors.New("invalid_email")
-	ErrEmailAlreadyUsed   = errors.New("email_already_used")
-	ErrInvalidPassword    = errors.New("invalid_password")
-	ErrInvalidCredentials = errors.New("invalid_credentials")
-	ErrUserNotFound       = errors.New("user not found")
-)
-
-type RegisterModel struct {
-	First_name string `json:"first_name"`
-	Last_name  string `json:"last_name"`
-	Email      string `json:"email"`
-	Password   string `json:"password"`
-}
-
-type LoginModel struct {
-	Email    string `json:"email"`
-	Password string `json:"password"`
-}
 
 func Register(input RegisterModel) error {
 	var (

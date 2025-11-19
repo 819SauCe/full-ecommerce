@@ -1,0 +1,20 @@
+/* Texto em degradê no 404 */
+.gradient-text {
+  background: linear-gradient(135deg, #dc3545, #0d6efd);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Animação suave de entrada do card */
+.animate-fade-up {
+  opacity: 0;
+  transform: translateY(12px);
+  animation: fadeUp 0.4s ease-out forwards;
+}
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

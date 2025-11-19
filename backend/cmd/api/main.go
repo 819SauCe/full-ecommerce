@@ -11,11 +11,13 @@ import (
 func main() {
 	config.Load()
 	config.Connect(config.Postgres_uri)
+	mux := http.NewServeMux()
 
-	http.HandleFunc("/auth/register", auth.RegisterHandler)
-	http.HandleFunc("/auth/login", auth.LoginHandler)
-	http.HandleFunc("/auth/logout", auth.LogoutHandler)
-	http.HandleFunc("/auth/me", auth.MeHandler)
+	mux.HandleFunc("/auth/register", auth.RegisterHandler)
+	mux.HandleFunc("/auth/login", auth.LoginHandler)
+	mux.HandleFunc("/auth/logout", auth.LogoutHandler)
+	mux.HandleFunc("/auth/me", auth.MeHandler)
 
-	http.ListenAndServe(":8080", nil)
+	handler := config.CORS(mux)
+	http.ListenAndServe(":8080", handler)
 }

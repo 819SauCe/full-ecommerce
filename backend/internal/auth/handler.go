@@ -107,7 +107,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 	helpers.SetAuthCookie(w, token)
 
-	response.WriteJSON(w, http.StatusAccepted, map[string]any{
+	response.WriteJSON(w, http.StatusOK, map[string]any{
 		"message": "User logged successfully",
 		"status":  "ok",
 	})
@@ -160,8 +160,17 @@ func MeHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	response.WriteJSON(w, http.StatusAccepted, map[string]any{
-		"status": "ok",
-		"claims": claims,
-	})
+	resp := MeResponse{
+		Status:     "ok",
+		ID:         claims["sub"],
+		ProfileImg: claims["profile_img"],
+		FirstName:  claims["first_name"],
+		LastName:   claims["last_name"],
+		Email:      claims["email"],
+		Role:       claims["role"],
+		Exp:        claims["exp"],
+		Iat:        claims["iat"],
+	}
+
+	response.WriteJSON(w, http.StatusOK, resp)
 }
