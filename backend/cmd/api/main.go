@@ -14,6 +14,8 @@ func main() {
 
 	http.HandleFunc("/auth/register", auth.RegisterHandler)
 	http.HandleFunc("/auth/login", auth.LoginHandler)
+	http.HandleFunc("/auth/logout", auth.LogoutHandler)
+	http.HandleFunc("/auth/me", auth.MeHandler)
 
 	http.ListenAndServe(":8080", nil)
 }

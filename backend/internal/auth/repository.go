@@ -1,6 +1,11 @@
 package auth
 
-import "full-ecommerce/internal/config"
+import (
+	"database/sql"
+	"errors"
+	"full-ecommerce/internal/config"
+	"full-ecommerce/internal/helpers"
+)
 
 func UserAlrdExists(email string) bool {
 	query := `SELECT EXISTS(SELECT 1 FROM users WHERE email = $1)`
@@ -29,18 +34,39 @@ func RegisterUser(first, last, email, password string) error {
 	return err
 }
 
-func GetUserIDAndRoleByEmail(email string) (string, string, error) {
-	query := `SELECT id, role FROM users WHERE email = $1`
+func GetUserDataByEmail(email string) (helpers.UserData, error) {
+	const query = `
+		SELECT 
+			id,
+			first_name,
+			last_name,
+			email,
+			role
+		FROM users
+		WHERE email = $1
+	`
+
 	row := config.DB.QueryRow(query, email)
 
-	var id string
-	var role string
+	var user helpers.UserData
 
-	if err := row.Scan(&id, &role); err != nil {
-		return "", "", err
+	err := row.Scan(
+		&user.Id,
+		&user.First_name,
+		&user.Last_name,
+		&user.Email,
+		&user.Role,
+	)
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return helpers.UserData{}, ErrUserNotFound
+		}
+		return helpers.UserData{}, err
 	}
 
-	return id, role, nil
+	user.Profile_img = ""
+
+	return user, nil
 }
 
 func GetPasswordHashByEmail(email string) (string, error) {

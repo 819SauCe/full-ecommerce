@@ -1,8 +1,19 @@
 package auth
 
 import (
+	"errors"
 	"fmt"
 	"full-ecommerce/internal/helpers"
+)
+
+var (
+	ErrInvalidFirstName   = errors.New("invalid_first_name")
+	ErrInvalidLastName    = errors.New("invalid_last_name")
+	ErrInvalidEmail       = errors.New("invalid_email")
+	ErrEmailAlreadyUsed   = errors.New("email_already_used")
+	ErrInvalidPassword    = errors.New("invalid_password")
+	ErrInvalidCredentials = errors.New("invalid_credentials")
+	ErrUserNotFound       = errors.New("user not found")
 )
 
 type RegisterModel struct {
@@ -23,53 +34,53 @@ func Register(input RegisterModel) error {
 		err     error
 	)
 
-	//validate first_name
+	// validate first_name
 	isValid, err = helpers.NameIsValid(input.First_name)
 	if err != nil {
 		return err
 	}
 	if !isValid {
-		return fmt.Errorf("first_name is not valid")
+		return ErrInvalidFirstName
 	}
 
-	//validate last_name
+	// validate last_name
 	isValid, err = helpers.NameIsValid(input.Last_name)
 	if err != nil {
 		return err
 	}
 	if !isValid {
-		return fmt.Errorf("last_name is not valid")
+		return ErrInvalidLastName
 	}
 
-	//Validate email
+	// validate email
 	isValid, err = helpers.EmailIsValid(input.Email)
 	if err != nil {
 		return err
 	}
 	if !isValid {
-		return fmt.Errorf("email is not valid")
+		return ErrInvalidEmail
 	}
 	if UserAlrdExists(input.Email) {
-		return fmt.Errorf("email already exists")
+		return ErrEmailAlreadyUsed
 	}
 
-	//Validate password
+	// validate password
 	isValid, err = helpers.PasswordIsValid(input.Password)
 	if err != nil {
 		return err
 	}
 	if !isValid {
-		return fmt.Errorf("password is not valid")
+		return ErrInvalidPassword
 	}
 
-	//hash password
-	password_hash, err := helpers.HashPassword(input.Password)
+	// hash password
+	passwordHash, err := helpers.HashPassword(input.Password)
 	if err != nil {
-		return fmt.Errorf("error while hashing password")
+		return fmt.Errorf("error while hashing password: %w", err)
 	}
 
-	//insert user
-	if err := RegisterUser(input.First_name, input.Last_name, input.Email, password_hash); err != nil {
+	// insert user
+	if err := RegisterUser(input.First_name, input.Last_name, input.Email, passwordHash); err != nil {
 		return err
 	}
 
@@ -107,7 +118,14 @@ func Login(input LoginModel) error {
 	if err != nil {
 		return fmt.Errorf("error")
 	}
-	helpers.CheckPasswordHash(input.Password, password_hash)
+	passwordIsCorrect := helpers.CheckPasswordHash(input.Password, password_hash)
+	if !passwordIsCorrect {
+		return ErrInvalidCredentials
+	}
 
+	return nil
+}
+
+func Logout(sessionToken string) error {
 	return nil
 }
