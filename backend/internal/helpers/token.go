@@ -3,6 +3,7 @@ package helpers
 import (
 	"errors"
 	"full-ecommerce/internal/config"
+	"net/http"
 	"os"
 	"time"
 
@@ -53,4 +54,18 @@ func ValidateToken(tokenString string) (jwt.MapClaims, error) {
 	}
 
 	return nil, errors.New("invalid token")
+}
+
+func SetAuthCookie(w http.ResponseWriter, token string) {
+	cookie := &http.Cookie{
+		Name:     "auth_token",
+		Value:    token,
+		Path:     "/",
+		Expires:  time.Now().Add(24 * time.Hour),
+		HttpOnly: true,
+		Secure:   true,
+		SameSite: http.SameSiteLaxMode,
+	}
+
+	http.SetCookie(w, cookie)
 }
