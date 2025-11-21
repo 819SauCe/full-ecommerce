@@ -1,0 +1,1369 @@
+<!doctype html>
+<html>
+  <head>
+    <title>E-commerce API</title>
+    <style type="text/css">
+      body {
+      	font-family: Trebuchet MS, sans-serif;
+      	font-size: 15px;
+      	color: #444;
+      	margin-right: 24px;
+      }
+      
+      h1	{
+      	font-size: 25px;
+      }
+      h2	{
+      	font-size: 20px;
+      }
+      h3	{
+      	font-size: 16px;
+      	font-weight: bold;
+      }
+      hr	{
+      	height: 1px;
+      	border: 0;
+      	color: #ddd;
+      	background-color: #ddd;
+      }
+      
+      .app-desc {
+        clear: both;
+        margin-left: 20px;
+      }
+      .param-name {
+        width: 100%;
+      }
+      .license-info {
+        margin-left: 20px;
+      }
+      
+      .license-url {
+        margin-left: 20px;
+      }
+      
+      .model {
+        margin: 0 0 0px 20px;
+      }
+      
+      .method {
+        margin-left: 20px;
+      }
+      
+      .method-notes	{
+      	margin: 10px 0 20px 0;
+      	font-size: 90%;
+      	color: #555;
+      }
+      
+      pre {
+        padding: 10px;
+        margin-bottom: 2px;
+      }
+      
+      .http-method {
+       text-transform: uppercase;
+      }
+      
+      pre.get {
+        background-color: #0f6ab4;
+      }
+      
+      pre.post {
+        background-color: #10a54a;
+      }
+      
+      pre.put {
+        background-color: #c5862b;
+      }
+      
+      pre.delete {
+        background-color: #a41e22;
+      }
+      
+      .huge	{
+      	color: #fff;
+      }
+      
+      pre.example {
+        background-color: #f3f3f3;
+        padding: 10px;
+        border: 1px solid #ddd;
+      }
+      
+      code {
+        white-space: pre;
+      }
+      
+      .nickname {
+        font-weight: bold;
+      }
+      
+      .method-path {
+        font-size: 1.5em;
+        background-color: #0f6ab4;
+      }
+      
+      .up {
+        float:right;
+      }
+      
+      .parameter {
+        width: 500px;
+      }
+      
+      .param {
+        width: 500px;
+        padding: 10px 0 0 20px;
+        font-weight: bold;
+      }
+      
+      .param-desc {
+        width: 700px;
+        padding: 0 0 0 20px;
+        color: #777;
+      }
+      
+      .param-type {
+        font-style: italic;
+      }
+      
+      .param-enum-header {
+      width: 700px;
+      padding: 0 0 0 60px;
+      color: #777;
+      font-weight: bold;
+      }
+      
+      .param-enum {
+      width: 700px;
+      padding: 0 0 0 80px;
+      color: #777;
+      font-style: italic;
+      }
+      
+      .field-label {
+        padding: 0;
+        margin: 0;
+        clear: both;
+      }
+      
+      .field-items	{
+      	padding: 0 0 15px 0;
+      	margin-bottom: 15px;
+      }
+      
+      .return-type {
+        clear: both;
+        padding-bottom: 10px;
+      }
+      
+      .param-header {
+        font-weight: bold;
+      }
+      
+      .method-tags {
+        text-align: right;
+      }
+      
+      .method-tag {
+        background: none repeat scroll 0% 0% #24A600;
+        border-radius: 3px;
+        padding: 2px 10px;
+        margin: 2px;
+        color: #FFF;
+        display: inline-block;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+  <h1>E-commerce API</h1>
+    <div class="app-desc">API de e-commerce com autenticação, produtos e carrinho.</div>
+    <div class="app-desc">More information: <a href="https://helloreverb.com">https://helloreverb.com</a></div>
+    <div class="app-desc">Contact Info: <a href="hello@helloreverb.com">hello@helloreverb.com</a></div>
+    <div class="app-desc">Version: 1.0.0</div>
+    <div class="app-desc">BasePath:/nan-2d4/Full-Ecommerce/1.0.0</div>
+    <div class="license-info">All rights reserved</div>
+    <div class="license-url">http://apache.org/licenses/LICENSE-2.0.html</div>
+  <h2>Access</h2>
+    <ol>
+      <li>APIKey KeyParamName:auth_token KeyInQuery:true KeyInHeader:false</li>
+    </ol>
+
+  <h2><a name="__Methods">Methods</a></h2>
+  [ Jump to <a href="#__Models">Models</a> ]
+
+  <h3>Table of Contents </h3>
+  <div class="method-summary"></div>
+  <h4><a href="#Auth">Auth</a></h4>
+  <ul>
+  <li><a href="#authLoginPost"><code><span class="http-method">post</span> /auth/login</code></a></li>
+  <li><a href="#authMeGet"><code><span class="http-method">get</span> /auth/me</code></a></li>
+  <li><a href="#authRegisterPost"><code><span class="http-method">post</span> /auth/register</code></a></li>
+  </ul>
+  <h4><a href="#Cart">Cart</a></h4>
+  <ul>
+  <li><a href="#cartDelete"><code><span class="http-method">delete</span> /cart</code></a></li>
+  <li><a href="#cartGet"><code><span class="http-method">get</span> /cart</code></a></li>
+  <li><a href="#cartItemsItemIdDelete"><code><span class="http-method">delete</span> /cart/items/{item_id}</code></a></li>
+  <li><a href="#cartItemsItemIdPut"><code><span class="http-method">put</span> /cart/items/{item_id}</code></a></li>
+  <li><a href="#cartItemsPost"><code><span class="http-method">post</span> /cart/items</code></a></li>
+  </ul>
+  <h4><a href="#Products">Products</a></h4>
+  <ul>
+  <li><a href="#productsGet"><code><span class="http-method">get</span> /products</code></a></li>
+  <li><a href="#productsIdDelete"><code><span class="http-method">delete</span> /products/{id}</code></a></li>
+  <li><a href="#productsIdPut"><code><span class="http-method">put</span> /products/{id}</code></a></li>
+  <li><a href="#productsPost"><code><span class="http-method">post</span> /products</code></a></li>
+  </ul>
+
+  <h1><a name="Auth">Auth</a></h1>
+  <div class="method"><a name="authLoginPost"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /auth/login</code></pre></div>
+    <div class="method-summary">Realiza login e retorna cookie de sessão (<span class="nickname">authLoginPost</span>)</div>
+    <div class="method-notes">Em caso de sucesso, retorna 200 e envia um cookie de sessão <code>auth_token</code>.</div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#AuthLoginRequest">AuthLoginRequest</a> (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+                </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#LoginResponse">LoginResponse</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "message" : "Login successful"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Login realizado com sucesso
+        <a href="#LoginResponse">LoginResponse</a>
+    <h4 class="field-label">401</h4>
+    Credenciais inválidas
+        <a href="#ApiError">ApiError</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="authMeGet"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /auth/me</code></pre></div>
+    <div class="method-summary">Retorna dados do usuário logado (<span class="nickname">authMeGet</span>)</div>
+    <div class="method-notes"></div>
+
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#User">User</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "last_name" : "Doe",
+  "created_at" : "2000-01-23T04:56:07.000+00:00",
+  "id" : "671adc5712a82c4e86d35f0a",
+  "first_name" : "John",
+  "email" : "john@example.com"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Usuário autenticado
+        <a href="#User">User</a>
+    <h4 class="field-label">401</h4>
+    Não autenticado
+        <a href="#ApiError">ApiError</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="authRegisterPost"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /auth/register</code></pre></div>
+    <div class="method-summary">Cria um novo usuário (<span class="nickname">authRegisterPost</span>)</div>
+    <div class="method-notes"></div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#AuthRegisterRequest">AuthRegisterRequest</a> (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+                </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#User">User</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "last_name" : "Doe",
+  "created_at" : "2000-01-23T04:56:07.000+00:00",
+  "id" : "671adc5712a82c4e86d35f0a",
+  "first_name" : "John",
+  "email" : "john@example.com"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">201</h4>
+    Usuário criado com sucesso
+        <a href="#User">User</a>
+    <h4 class="field-label">400</h4>
+    Dados inválidos
+        <a href="#ApiError">ApiError</a>
+  </div> <!-- method -->
+  <hr/>
+  <h1><a name="Cart">Cart</a></h1>
+  <div class="method"><a name="cartDelete"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /cart</code></pre></div>
+    <div class="method-summary">Esvazia o carrinho (<span class="nickname">cartDelete</span>)</div>
+    <div class="method-notes"></div>
+
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+    </div>  <!-- field-items -->
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">204</h4>
+    Carrinho esvaziado
+        <a href="#"></a>
+    <h4 class="field-label">401</h4>
+    Não autenticado
+        <a href="#ApiError">ApiError</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="cartGet"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /cart</code></pre></div>
+    <div class="method-summary">Retorna o carrinho do usuário (<span class="nickname">cartGet</span>)</div>
+    <div class="method-notes"></div>
+
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Cart">Cart</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "updated_at" : "2000-01-23T04:56:07.000+00:00",
+  "user_id" : "user_id",
+  "total_amount" : 119.8,
+  "created_at" : "2000-01-23T04:56:07.000+00:00",
+  "id" : "id",
+  "items" : [ {
+    "product" : {
+      "short_description" : "Básica",
+      "profile_image" : "http://imagem.jpg",
+      "updated_at" : "2000-01-23T04:56:07.000+00:00",
+      "price" : 59.9,
+      "discount_price" : 49.9,
+      "name" : "Camiseta Preta",
+      "description" : "Camiseta de algodão",
+      "created_at" : "2000-01-23T04:56:07.000+00:00",
+      "id" : "671adc5712a82c4e86d35f0a",
+      "sku" : "SKU123",
+      "dimensions" : {
+        "width_cm" : 30,
+        "weight_grams" : 200,
+        "height_cm" : 4,
+        "depth_cm" : 25
+      },
+      "tags" : [ "camiseta", "preta" ]
+    },
+    "quantity" : 2,
+    "product_id" : "671adc5712a82c4e86d35f0a",
+    "id" : "1"
+  }, {
+    "product" : {
+      "short_description" : "Básica",
+      "profile_image" : "http://imagem.jpg",
+      "updated_at" : "2000-01-23T04:56:07.000+00:00",
+      "price" : 59.9,
+      "discount_price" : 49.9,
+      "name" : "Camiseta Preta",
+      "description" : "Camiseta de algodão",
+      "created_at" : "2000-01-23T04:56:07.000+00:00",
+      "id" : "671adc5712a82c4e86d35f0a",
+      "sku" : "SKU123",
+      "dimensions" : {
+        "width_cm" : 30,
+        "weight_grams" : 200,
+        "height_cm" : 4,
+        "depth_cm" : 25
+      },
+      "tags" : [ "camiseta", "preta" ]
+    },
+    "quantity" : 2,
+    "product_id" : "671adc5712a82c4e86d35f0a",
+    "id" : "1"
+  } ]
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Carrinho atual do usuário
+        <a href="#Cart">Cart</a>
+    <h4 class="field-label">401</h4>
+    Não autenticado
+        <a href="#ApiError">ApiError</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="cartItemsItemIdDelete"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /cart/items/{item_id}</code></pre></div>
+    <div class="method-summary">Remove um item do carrinho (<span class="nickname">cartItemsItemIdDelete</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">item_id (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash;  </div>    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Cart">Cart</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "updated_at" : "2000-01-23T04:56:07.000+00:00",
+  "user_id" : "user_id",
+  "total_amount" : 119.8,
+  "created_at" : "2000-01-23T04:56:07.000+00:00",
+  "id" : "id",
+  "items" : [ {
+    "product" : {
+      "short_description" : "Básica",
+      "profile_image" : "http://imagem.jpg",
+      "updated_at" : "2000-01-23T04:56:07.000+00:00",
+      "price" : 59.9,
+      "discount_price" : 49.9,
+      "name" : "Camiseta Preta",
+      "description" : "Camiseta de algodão",
+      "created_at" : "2000-01-23T04:56:07.000+00:00",
+      "id" : "671adc5712a82c4e86d35f0a",
+      "sku" : "SKU123",
+      "dimensions" : {
+        "width_cm" : 30,
+        "weight_grams" : 200,
+        "height_cm" : 4,
+        "depth_cm" : 25
+      },
+      "tags" : [ "camiseta", "preta" ]
+    },
+    "quantity" : 2,
+    "product_id" : "671adc5712a82c4e86d35f0a",
+    "id" : "1"
+  }, {
+    "product" : {
+      "short_description" : "Básica",
+      "profile_image" : "http://imagem.jpg",
+      "updated_at" : "2000-01-23T04:56:07.000+00:00",
+      "price" : 59.9,
+      "discount_price" : 49.9,
+      "name" : "Camiseta Preta",
+      "description" : "Camiseta de algodão",
+      "created_at" : "2000-01-23T04:56:07.000+00:00",
+      "id" : "671adc5712a82c4e86d35f0a",
+      "sku" : "SKU123",
+      "dimensions" : {
+        "width_cm" : 30,
+        "weight_grams" : 200,
+        "height_cm" : 4,
+        "depth_cm" : 25
+      },
+      "tags" : [ "camiseta", "preta" ]
+    },
+    "quantity" : 2,
+    "product_id" : "671adc5712a82c4e86d35f0a",
+    "id" : "1"
+  } ]
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Item removido
+        <a href="#Cart">Cart</a>
+    <h4 class="field-label">401</h4>
+    Não autenticado
+        <a href="#ApiError">ApiError</a>
+    <h4 class="field-label">404</h4>
+    Item não encontrado
+        <a href="#ApiError">ApiError</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="cartItemsItemIdPut"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /cart/items/{item_id}</code></pre></div>
+    <div class="method-summary">Atualiza a quantidade de um item (<span class="nickname">cartItemsItemIdPut</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">item_id (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash;  </div>    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#CartItemUpdateRequest">CartItemUpdateRequest</a> (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+                </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Cart">Cart</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "updated_at" : "2000-01-23T04:56:07.000+00:00",
+  "user_id" : "user_id",
+  "total_amount" : 119.8,
+  "created_at" : "2000-01-23T04:56:07.000+00:00",
+  "id" : "id",
+  "items" : [ {
+    "product" : {
+      "short_description" : "Básica",
+      "profile_image" : "http://imagem.jpg",
+      "updated_at" : "2000-01-23T04:56:07.000+00:00",
+      "price" : 59.9,
+      "discount_price" : 49.9,
+      "name" : "Camiseta Preta",
+      "description" : "Camiseta de algodão",
+      "created_at" : "2000-01-23T04:56:07.000+00:00",
+      "id" : "671adc5712a82c4e86d35f0a",
+      "sku" : "SKU123",
+      "dimensions" : {
+        "width_cm" : 30,
+        "weight_grams" : 200,
+        "height_cm" : 4,
+        "depth_cm" : 25
+      },
+      "tags" : [ "camiseta", "preta" ]
+    },
+    "quantity" : 2,
+    "product_id" : "671adc5712a82c4e86d35f0a",
+    "id" : "1"
+  }, {
+    "product" : {
+      "short_description" : "Básica",
+      "profile_image" : "http://imagem.jpg",
+      "updated_at" : "2000-01-23T04:56:07.000+00:00",
+      "price" : 59.9,
+      "discount_price" : 49.9,
+      "name" : "Camiseta Preta",
+      "description" : "Camiseta de algodão",
+      "created_at" : "2000-01-23T04:56:07.000+00:00",
+      "id" : "671adc5712a82c4e86d35f0a",
+      "sku" : "SKU123",
+      "dimensions" : {
+        "width_cm" : 30,
+        "weight_grams" : 200,
+        "height_cm" : 4,
+        "depth_cm" : 25
+      },
+      "tags" : [ "camiseta", "preta" ]
+    },
+    "quantity" : 2,
+    "product_id" : "671adc5712a82c4e86d35f0a",
+    "id" : "1"
+  } ]
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Item atualizado
+        <a href="#Cart">Cart</a>
+    <h4 class="field-label">400</h4>
+    Dados inválidos
+        <a href="#ApiError">ApiError</a>
+    <h4 class="field-label">401</h4>
+    Não autenticado
+        <a href="#ApiError">ApiError</a>
+    <h4 class="field-label">404</h4>
+    Item não encontrado
+        <a href="#ApiError">ApiError</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="cartItemsPost"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /cart/items</code></pre></div>
+    <div class="method-summary">Adiciona um item ao carrinho (<span class="nickname">cartItemsPost</span>)</div>
+    <div class="method-notes"></div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#CartItemCreateRequest">CartItemCreateRequest</a> (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+                </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Cart">Cart</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "updated_at" : "2000-01-23T04:56:07.000+00:00",
+  "user_id" : "user_id",
+  "total_amount" : 119.8,
+  "created_at" : "2000-01-23T04:56:07.000+00:00",
+  "id" : "id",
+  "items" : [ {
+    "product" : {
+      "short_description" : "Básica",
+      "profile_image" : "http://imagem.jpg",
+      "updated_at" : "2000-01-23T04:56:07.000+00:00",
+      "price" : 59.9,
+      "discount_price" : 49.9,
+      "name" : "Camiseta Preta",
+      "description" : "Camiseta de algodão",
+      "created_at" : "2000-01-23T04:56:07.000+00:00",
+      "id" : "671adc5712a82c4e86d35f0a",
+      "sku" : "SKU123",
+      "dimensions" : {
+        "width_cm" : 30,
+        "weight_grams" : 200,
+        "height_cm" : 4,
+        "depth_cm" : 25
+      },
+      "tags" : [ "camiseta", "preta" ]
+    },
+    "quantity" : 2,
+    "product_id" : "671adc5712a82c4e86d35f0a",
+    "id" : "1"
+  }, {
+    "product" : {
+      "short_description" : "Básica",
+      "profile_image" : "http://imagem.jpg",
+      "updated_at" : "2000-01-23T04:56:07.000+00:00",
+      "price" : 59.9,
+      "discount_price" : 49.9,
+      "name" : "Camiseta Preta",
+      "description" : "Camiseta de algodão",
+      "created_at" : "2000-01-23T04:56:07.000+00:00",
+      "id" : "671adc5712a82c4e86d35f0a",
+      "sku" : "SKU123",
+      "dimensions" : {
+        "width_cm" : 30,
+        "weight_grams" : 200,
+        "height_cm" : 4,
+        "depth_cm" : 25
+      },
+      "tags" : [ "camiseta", "preta" ]
+    },
+    "quantity" : 2,
+    "product_id" : "671adc5712a82c4e86d35f0a",
+    "id" : "1"
+  } ]
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">201</h4>
+    Item adicionado ao carrinho
+        <a href="#Cart">Cart</a>
+    <h4 class="field-label">400</h4>
+    Dados inválidos
+        <a href="#ApiError">ApiError</a>
+    <h4 class="field-label">401</h4>
+    Não autenticado
+        <a href="#ApiError">ApiError</a>
+  </div> <!-- method -->
+  <hr/>
+  <h1><a name="Products">Products</a></h1>
+  <div class="method"><a name="productsGet"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /products</code></pre></div>
+    <div class="method-summary">Lista produtos com paginação e filtros (<span class="nickname">productsGet</span>)</div>
+    <div class="method-notes"></div>
+
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">search (optional)</div>
+      
+            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Texto de busca (ex. nome, descrição) </div>      <div class="param">min_price (optional)</div>
+      
+            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Preço mínimo format: float</div>      <div class="param">max_price (optional)</div>
+      
+            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Preço máximo format: float</div>      <div class="param">page (optional)</div>
+      
+            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash;  default: 1 </div>      <div class="param">limit (optional)</div>
+      
+            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash;  default: 10 </div>    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#ProductListResponse">ProductListResponse</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "total" : 42,
+  "limit" : 10,
+  "page" : 1,
+  "items" : [ {
+    "short_description" : "Básica",
+    "profile_image" : "http://imagem.jpg",
+    "updated_at" : "2000-01-23T04:56:07.000+00:00",
+    "price" : 59.9,
+    "discount_price" : 49.9,
+    "name" : "Camiseta Preta",
+    "description" : "Camiseta de algodão",
+    "created_at" : "2000-01-23T04:56:07.000+00:00",
+    "id" : "671adc5712a82c4e86d35f0a",
+    "sku" : "SKU123",
+    "dimensions" : {
+      "width_cm" : 30,
+      "weight_grams" : 200,
+      "height_cm" : 4,
+      "depth_cm" : 25
+    },
+    "tags" : [ "camiseta", "preta" ]
+  }, {
+    "short_description" : "Básica",
+    "profile_image" : "http://imagem.jpg",
+    "updated_at" : "2000-01-23T04:56:07.000+00:00",
+    "price" : 59.9,
+    "discount_price" : 49.9,
+    "name" : "Camiseta Preta",
+    "description" : "Camiseta de algodão",
+    "created_at" : "2000-01-23T04:56:07.000+00:00",
+    "id" : "671adc5712a82c4e86d35f0a",
+    "sku" : "SKU123",
+    "dimensions" : {
+      "width_cm" : 30,
+      "weight_grams" : 200,
+      "height_cm" : 4,
+      "depth_cm" : 25
+    },
+    "tags" : [ "camiseta", "preta" ]
+  } ]
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Lista de produtos
+        <a href="#ProductListResponse">ProductListResponse</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="productsIdDelete"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /products/{id}</code></pre></div>
+    <div class="method-summary">Remove um produto (<span class="nickname">productsIdDelete</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash;  </div>    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+    </div>  <!-- field-items -->
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">204</h4>
+    Produto removido com sucesso
+        <a href="#"></a>
+    <h4 class="field-label">401</h4>
+    Não autenticado
+        <a href="#ApiError">ApiError</a>
+    <h4 class="field-label">404</h4>
+    Produto não encontrado
+        <a href="#ApiError">ApiError</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="productsIdPut"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /products/{id}</code></pre></div>
+    <div class="method-summary">Atualiza dados de um produto (<span class="nickname">productsIdPut</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">id (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash;  </div>    </div>  <!-- field-items -->
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#ProductUpdateRequest">ProductUpdateRequest</a> (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+                </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Product">Product</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "short_description" : "Básica",
+  "profile_image" : "http://imagem.jpg",
+  "updated_at" : "2000-01-23T04:56:07.000+00:00",
+  "price" : 59.9,
+  "discount_price" : 49.9,
+  "name" : "Camiseta Preta",
+  "description" : "Camiseta de algodão",
+  "created_at" : "2000-01-23T04:56:07.000+00:00",
+  "id" : "671adc5712a82c4e86d35f0a",
+  "sku" : "SKU123",
+  "dimensions" : {
+    "width_cm" : 30,
+    "weight_grams" : 200,
+    "height_cm" : 4,
+    "depth_cm" : 25
+  },
+  "tags" : [ "camiseta", "preta" ]
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Produto atualizado
+        <a href="#Product">Product</a>
+    <h4 class="field-label">400</h4>
+    Dados inválidos
+        <a href="#ApiError">ApiError</a>
+    <h4 class="field-label">401</h4>
+    Não autenticado
+        <a href="#ApiError">ApiError</a>
+    <h4 class="field-label">404</h4>
+    Produto não encontrado
+        <a href="#ApiError">ApiError</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="productsPost"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /products</code></pre></div>
+    <div class="method-summary">Cria um novo produto (rota administrativa) (<span class="nickname">productsPost</span>)</div>
+    <div class="method-notes"></div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#ProductCreateRequest">ProductCreateRequest</a> (required)</div>
+      
+            <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+                </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Product">Product</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "short_description" : "Básica",
+  "profile_image" : "http://imagem.jpg",
+  "updated_at" : "2000-01-23T04:56:07.000+00:00",
+  "price" : 59.9,
+  "discount_price" : 49.9,
+  "name" : "Camiseta Preta",
+  "description" : "Camiseta de algodão",
+  "created_at" : "2000-01-23T04:56:07.000+00:00",
+  "id" : "671adc5712a82c4e86d35f0a",
+  "sku" : "SKU123",
+  "dimensions" : {
+    "width_cm" : 30,
+    "weight_grams" : 200,
+    "height_cm" : 4,
+    "depth_cm" : 25
+  },
+  "tags" : [ "camiseta", "preta" ]
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">201</h4>
+    Produto criado com sucesso
+        <a href="#Product">Product</a>
+    <h4 class="field-label">400</h4>
+    Dados inválidos
+        <a href="#ApiError">ApiError</a>
+    <h4 class="field-label">401</h4>
+    Não autenticado
+        <a href="#ApiError">ApiError</a>
+  </div> <!-- method -->
+  <hr/>
+
+  <h2><a name="__Models">Models</a></h2>
+  [ Jump to <a href="#__Methods">Methods</a> ]
+
+  <h3>Table of Contents</h3>
+  <ol>
+    <li><a href="#ApiError"><code>ApiError</code></a></li>
+    <li><a href="#AuthLoginRequest"><code>AuthLoginRequest</code></a></li>
+    <li><a href="#AuthRegisterRequest"><code>AuthRegisterRequest</code></a></li>
+    <li><a href="#Cart"><code>Cart</code></a></li>
+    <li><a href="#CartItem"><code>CartItem</code></a></li>
+    <li><a href="#CartItemCreateRequest"><code>CartItemCreateRequest</code></a></li>
+    <li><a href="#CartItemUpdateRequest"><code>CartItemUpdateRequest</code></a></li>
+    <li><a href="#LoginResponse"><code>LoginResponse</code></a></li>
+    <li><a href="#Product"><code>Product</code></a></li>
+    <li><a href="#ProductCreateRequest"><code>ProductCreateRequest</code></a></li>
+    <li><a href="#ProductDimensions"><code>ProductDimensions</code></a></li>
+    <li><a href="#ProductListResponse"><code>ProductListResponse</code></a></li>
+    <li><a href="#ProductUpdateRequest"><code>ProductUpdateRequest</code></a></li>
+    <li><a href="#User"><code>User</code></a></li>
+  </ol>
+
+  <div class="model">
+    <h3><a name="ApiError"><code>ApiError</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">message (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: Erro ao processar requisição</span></div>
+<div class="param">code (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: VALIDATION_ERROR</span></div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="AuthLoginRequest"><code>AuthLoginRequest</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">email </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  format: email</div>
+          <div class="param-desc"><span class="param-type">example: john@example.com</span></div>
+<div class="param">password </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  format: password</div>
+          <div class="param-desc"><span class="param-type">example: 123456</span></div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="AuthRegisterRequest"><code>AuthRegisterRequest</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">first_name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: John</span></div>
+<div class="param">last_name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: Doe</span></div>
+<div class="param">email </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  format: email</div>
+          <div class="param-desc"><span class="param-type">example: john@example.com</span></div>
+<div class="param">password </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  format: password</div>
+          <div class="param-desc"><span class="param-type">example: SenhaF0rte!</span></div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Cart"><code>Cart</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">user_id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">items (optional)</div><div class="param-desc"><span class="param-type"><a href="#CartItem">array[CartItem]</a></span>  </div>
+<div class="param">total_amount (optional)</div><div class="param-desc"><span class="param-type"><a href="#float">Float</a></span>  format: float</div>
+          <div class="param-desc"><span class="param-type">example: 119.8</span></div>
+<div class="param">created_at (optional)</div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
+<div class="param">updated_at (optional)</div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="CartItem"><code>CartItem</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: 1</span></div>
+<div class="param">product_id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: 671adc5712a82c4e86d35f0a</span></div>
+<div class="param">quantity (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: 2</span></div>
+<div class="param">product (optional)</div><div class="param-desc"><span class="param-type"><a href="#Product">Product</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="CartItemCreateRequest"><code>CartItemCreateRequest</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">product_id </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: 671adc5712a82c4e86d35f0a</span></div>
+<div class="param">quantity </div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: 2</span></div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="CartItemUpdateRequest"><code>CartItemUpdateRequest</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">quantity </div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: 5</span></div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="LoginResponse"><code>LoginResponse</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">message (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: Login successful</span></div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Product"><code>Product</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: 671adc5712a82c4e86d35f0a</span></div>
+<div class="param">sku (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: SKU123</span></div>
+<div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: Camiseta Preta</span></div>
+<div class="param">short_description (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: Básica</span></div>
+<div class="param">description (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: Camiseta de algodão</span></div>
+<div class="param">price (optional)</div><div class="param-desc"><span class="param-type"><a href="#float">Float</a></span>  format: float</div>
+          <div class="param-desc"><span class="param-type">example: 59.9</span></div>
+<div class="param">discount_price (optional)</div><div class="param-desc"><span class="param-type"><a href="#float">Float</a></span>  format: float</div>
+          <div class="param-desc"><span class="param-type">example: 49.9</span></div>
+<div class="param">dimensions (optional)</div><div class="param-desc"><span class="param-type"><a href="#ProductDimensions">ProductDimensions</a></span>  </div>
+<div class="param">profile_image (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  format: uri</div>
+          <div class="param-desc"><span class="param-type">example: http://imagem.jpg</span></div>
+<div class="param">tags (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: [&quot;camiseta&quot;,&quot;preta&quot;]</span></div>
+<div class="param">created_at (optional)</div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
+<div class="param">updated_at (optional)</div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="ProductCreateRequest"><code>ProductCreateRequest</code></a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>Campos usados para criação de um produto.</div>
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: 671adc5712a82c4e86d35f0a</span></div>
+<div class="param">sku </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: SKU123</span></div>
+<div class="param">name </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: Camiseta Preta</span></div>
+<div class="param">short_description (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: Básica</span></div>
+<div class="param">description (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: Camiseta de algodão</span></div>
+<div class="param">price </div><div class="param-desc"><span class="param-type"><a href="#float">Float</a></span>  format: float</div>
+          <div class="param-desc"><span class="param-type">example: 59.9</span></div>
+<div class="param">discount_price (optional)</div><div class="param-desc"><span class="param-type"><a href="#float">Float</a></span>  format: float</div>
+          <div class="param-desc"><span class="param-type">example: 49.9</span></div>
+<div class="param">dimensions (optional)</div><div class="param-desc"><span class="param-type"><a href="#ProductDimensions">ProductDimensions</a></span>  </div>
+<div class="param">profile_image (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  format: uri</div>
+          <div class="param-desc"><span class="param-type">example: http://imagem.jpg</span></div>
+<div class="param">tags (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: [&quot;camiseta&quot;,&quot;preta&quot;]</span></div>
+<div class="param">created_at (optional)</div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
+<div class="param">updated_at (optional)</div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="ProductDimensions"><code>ProductDimensions</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">weight_grams (optional)</div><div class="param-desc"><span class="param-type"><a href="#BigDecimal">BigDecimal</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: 200</span></div>
+<div class="param">width_cm (optional)</div><div class="param-desc"><span class="param-type"><a href="#BigDecimal">BigDecimal</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: 30</span></div>
+<div class="param">height_cm (optional)</div><div class="param-desc"><span class="param-type"><a href="#BigDecimal">BigDecimal</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: 4</span></div>
+<div class="param">depth_cm (optional)</div><div class="param-desc"><span class="param-type"><a href="#BigDecimal">BigDecimal</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: 25</span></div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="ProductListResponse"><code>ProductListResponse</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">items (optional)</div><div class="param-desc"><span class="param-type"><a href="#Product">array[Product]</a></span>  </div>
+<div class="param">total (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: 42</span></div>
+<div class="param">page (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: 1</span></div>
+<div class="param">limit (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: 10</span></div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="ProductUpdateRequest"><code>ProductUpdateRequest</code></a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>Campos opcionais para atualizar um produto</div>
+    <div class="field-items">
+      <div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">short_description (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">description (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">price (optional)</div><div class="param-desc"><span class="param-type"><a href="#float">Float</a></span>  format: float</div>
+<div class="param">discount_price (optional)</div><div class="param-desc"><span class="param-type"><a href="#float">Float</a></span>  format: float</div>
+<div class="param">dimensions (optional)</div><div class="param-desc"><span class="param-type"><a href="#ProductDimensions">ProductDimensions</a></span>  </div>
+<div class="param">profile_image (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  format: uri</div>
+<div class="param">tags (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="User"><code>User</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: 671adc5712a82c4e86d35f0a</span></div>
+<div class="param">first_name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: John</span></div>
+<div class="param">last_name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: Doe</span></div>
+<div class="param">email (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  format: email</div>
+          <div class="param-desc"><span class="param-type">example: john@example.com</span></div>
+<div class="param">created_at (optional)</div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
+    </div>  <!-- field-items -->
+  </div>
+  </body>
+</html>

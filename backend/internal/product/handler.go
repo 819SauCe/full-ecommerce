@@ -3,6 +3,7 @@ package product
 import (
 	"encoding/json"
 	"errors"
+	"full-ecommerce/internal/middlewares"
 	"full-ecommerce/pkg/response"
 	"log"
 	"net/http"
@@ -47,9 +48,11 @@ func productByIDHandler(w http.ResponseWriter, r *http.Request) {
 		GetProductHandler(w, r, id)
 	case http.MethodDelete:
 		DeleteProductHandler(w, r, id)
+	case http.MethodPut:
+		UpdateProductHandler(w, r, id)
 	default:
 		response.WriteError(w, http.StatusMethodNotAllowed, "method_not_allowed",
-			"Method not allowed. Use GET or DELETE.")
+			"Method not allowed. Use GET, PUT or DELETE.")
 	}
 }
 
@@ -57,6 +60,10 @@ func CreateProductHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		response.WriteError(w, http.StatusMethodNotAllowed, "method_not_allowed",
 			"Method not allowed. Use POST.")
+		return
+	}
+
+	if _, ok := middlewares.RequireRole(w, r, "admin"); !ok {
 		return
 	}
 
@@ -104,6 +111,11 @@ func GetProductHandler(w http.ResponseWriter, r *http.Request, id primitive.Obje
 }
 
 func DeleteProductHandler(w http.ResponseWriter, r *http.Request, id primitive.ObjectID) {
+
+	if _, ok := middlewares.RequireRole(w, r, "admin"); !ok {
+		return
+	}
+
 	err := DeleteProduct(r.Context(), id)
 	if err != nil {
 		response.WriteError(w, http.StatusNotFound, "product_not_found", "Product not found.")
@@ -143,6 +155,48 @@ func ListProductsHandler(w http.ResponseWriter, r *http.Request) {
 		"limit":    filters.Limit,
 		"count":    len(products),
 		"products": products,
+	})
+}
+
+func UpdateProductHandler(w http.ResponseWriter, r *http.Request, id primitive.ObjectID) {
+	if r.Method != http.MethodPut {
+		response.WriteError(w, http.StatusMethodNotAllowed, "method_not_allowed",
+			"Method not allowed. Use PUT.")
+		return
+	}
+
+	if _, ok := middlewares.RequireRole(w, r, "admin"); !ok {
+		return
+	}
+
+	var body CreateProductInput
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		response.WriteError(w, http.StatusBadRequest, "invalid_body", "Invalid JSON in request body.")
+		return
+	}
+
+	if err := UpdateProduct(r.Context(), id, body); err != nil {
+		switch {
+		case errors.Is(err, ErrInvalidSKU):
+			response.WriteError(w, http.StatusBadRequest, "invalid_sku", "The provided SKU is invalid.")
+			return
+		case errors.Is(err, ErrInvalidName):
+			response.WriteError(w, http.StatusBadRequest, "invalid_name", "The provided product name is invalid.")
+			return
+		case errors.Is(err, ErrSKUExists):
+			response.WriteError(w, http.StatusConflict, "sku_exists", "This SKU is already in use.")
+			return
+		default:
+			log.Printf("UpdateProduct error: %v", err)
+			response.WriteError(w, http.StatusInternalServerError, "product_update_error",
+				"An error occurred while updating the product.")
+			return
+		}
+	}
+
+	response.WriteJSON(w, http.StatusOK, map[string]any{
+		"message": "Product updated successfully.",
+		"status":  "ok",
 	})
 }
 

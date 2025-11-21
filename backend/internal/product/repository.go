@@ -39,11 +39,6 @@ func ProductExistsBySKU(ctx context.Context, sku string) bool {
 	return err == nil
 }
 
-func UpdateProduct(ctx context.Context, id primitive.ObjectID, update bson.M) error {
-	_, err := collection().UpdateByID(ctx, id, bson.M{"$set": update})
-	return err
-}
-
 func DeleteProduct(ctx context.Context, id primitive.ObjectID) error {
 	_, err := collection().DeleteOne(ctx, bson.M{"_id": id})
 	return err
@@ -101,4 +96,9 @@ func QueryProducts(ctx context.Context, filters ProductQueryFilters) ([]Product,
 	}
 
 	return products, nil
+}
+
+func UpdateProductByID(ctx context.Context, id primitive.ObjectID, update bson.M) error {
+	_, err := collection().UpdateByID(ctx, id, bson.M{"$set": update})
+	return err
 }

@@ -2,6 +2,7 @@ package main
 
 import (
 	"full-ecommerce/internal/auth"
+	"full-ecommerce/internal/cart"
 	"full-ecommerce/internal/config"
 	"full-ecommerce/internal/product" // <--- adiciona isso
 	"net/http"
@@ -20,6 +21,7 @@ func main() {
 	mux := http.NewServeMux()
 	auth.RegisterAuthRoutes(mux)
 	product.RegisterProductRoutes(mux)
+	cart.RegisterCartRoutes(mux)
 
 	handler := config.CORS(mux)
 	http.ListenAndServe(":8080", handler)

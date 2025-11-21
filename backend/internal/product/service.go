@@ -5,6 +5,7 @@ import (
 	"errors"
 	"full-ecommerce/internal/helpers"
 
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
@@ -65,4 +66,43 @@ func CreateProduct(input CreateProductInput) (primitive.ObjectID, error) {
 func ListProducts(filters ProductQueryFilters) ([]Product, error) {
 	ctx := context.Background()
 	return QueryProducts(ctx, filters)
+}
+
+func UpdateProduct(ctx context.Context, id primitive.ObjectID, input CreateProductInput) error {
+	if len(input.SKU) < 2 {
+		return ErrInvalidSKU
+	}
+
+	isValid, err := helpers.NameIsValid(input.Name)
+	if err != nil {
+		return err
+	}
+	if !isValid {
+		return ErrInvalidName
+	}
+
+	existing, err := FindProductByID(ctx, id)
+	if err != nil {
+		return err
+	}
+
+	if input.SKU != existing.SKU && ProductExistsBySKU(ctx, input.SKU) {
+		return ErrSKUExists
+	}
+
+	update := bson.M{
+		"sku":               input.SKU,
+		"name":              input.Name,
+		"short_description": input.ShortDescription,
+		"description":       input.Description,
+		"price":             input.Price,
+		"discount_price":    input.DiscountPrice,
+		"dimensions":        input.Dimensions,
+		"profile_image":     input.ProfileImage,
+		"images":            input.Images,
+		"variants":          input.Variants,
+		"tags":              input.Tags,
+	}
+
+	return UpdateProductByID(ctx, id, update)
 }
