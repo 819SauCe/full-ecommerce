@@ -12,6 +12,8 @@ func main() {
 	config.Load()
 	config.ConnectPostgres(config.Postgres_uri)
 	config.ConnectMongoDB(config.Mongo_uri, "full_ecommerce")
+	config.ConnectRabbitMQ()
+	config.ConnectRedis()
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("/auth/register", auth.RegisterHandler)

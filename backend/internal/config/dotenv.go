@@ -12,6 +12,9 @@ var Postgres_uri string
 var Password_hash_key string
 var Jwt_secret string
 var Mongo_uri string
+var RedisAddr string
+var RedisPass string
+var Rabbitmq_uri string
 
 func Load() {
 	err := godotenv.Load("../../../.env")
@@ -43,6 +46,28 @@ func Load() {
 	}
 
 	Mongo_uri = fmt.Sprintf("mongodb://%s:%s@localhost:%s", mongo_user, mongo_password, mongo_port)
+
+	//REDIS
+	redisPort := os.Getenv("REDIS_PORT")
+	RedisPass = os.Getenv("REDIS_PASSWORD")
+
+	if redisPort == "" {
+		log.Fatal("Error on loading redis")
+	}
+
+	RedisAddr = "localhost:" + redisPort
+
+	//RABBITMQ
+	rabbit_user := os.Getenv("RABBIT_USER")
+	rabbit_pass := os.Getenv("RABBIT_PASSWORD")
+	rabbit_host := os.Getenv("RABBIT_HOST")
+	rabbit_port := os.Getenv("RABBITMQ_PORT")
+
+	if rabbit_host == "" || rabbit_pass == "" || rabbit_port == "" || rabbit_user == "" {
+		log.Fatal("Error on loading rabbitmq")
+	}
+
+	Rabbitmq_uri = fmt.Sprintf("amqp://%s:%s@%s:%s/", rabbit_user, rabbit_pass, rabbit_host, rabbit_port)
 
 	//PASSWORD HASH SECRET
 	Password_hash_key = os.Getenv("HASH_PASSWORD_KEY")
