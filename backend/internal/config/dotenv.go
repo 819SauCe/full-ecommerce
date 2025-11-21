@@ -11,6 +11,7 @@ import (
 var Postgres_uri string
 var Password_hash_key string
 var Jwt_secret string
+var Mongo_uri string
 
 func Load() {
 	err := godotenv.Load("../../../.env")
@@ -40,6 +41,8 @@ func Load() {
 	if mongo_user == "" || mongo_password == "" || mongo_port == "" {
 		log.Fatal("Error on loading mongo data")
 	}
+
+	Mongo_uri = fmt.Sprintf("mongodb://%s:%s@localhost:%s", mongo_user, mongo_password, mongo_port)
 
 	//PASSWORD HASH SECRET
 	Password_hash_key = os.Getenv("HASH_PASSWORD_KEY")

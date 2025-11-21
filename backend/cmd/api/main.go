@@ -10,7 +10,8 @@ import (
 
 func main() {
 	config.Load()
-	config.Connect(config.Postgres_uri)
+	config.ConnectPostgres(config.Postgres_uri)
+	config.ConnectMongoDB(config.Mongo_uri, "full_ecommerce")
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("/auth/register", auth.RegisterHandler)
