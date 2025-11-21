@@ -32,6 +32,15 @@ func Load() {
 
 	Postgres_uri = fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=%s", postgre_user, postgre_password, postgre_host, postgre_port, postgre_db, postgre_ssl)
 
+	//MONGO
+	mongo_user := os.Getenv("MONGO_USER")
+	mongo_password := os.Getenv("MONGO_PASSWORD")
+	mongo_port := os.Getenv("MONGO_PORT")
+
+	if mongo_user == "" || mongo_password == "" || mongo_port == "" {
+		log.Fatal("Error on loading mongo data")
+	}
+
 	//PASSWORD HASH SECRET
 	Password_hash_key = os.Getenv("HASH_PASSWORD_KEY")
 	if Password_hash_key == "" {
