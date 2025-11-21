@@ -10,6 +10,13 @@ import (
 	"time"
 )
 
+func RegisterAuthRoutes(mux *http.ServeMux) {
+	mux.HandleFunc("/auth/register", RegisterHandler)
+	mux.HandleFunc("/auth/login", LoginHandler)
+	mux.HandleFunc("/auth/logout", LogoutHandler)
+	mux.HandleFunc("/auth/me", MeHandler)
+}
+
 func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		response.WriteError(w, http.StatusMethodNotAllowed, "method_not_allowed", "Method not allowed. Use POST.")
