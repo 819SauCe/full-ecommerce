@@ -1,200 +1,189 @@
+@use '../styles/variables' as *;
+
 .header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    padding: 0.5rem 1rem;
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.18);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    position: relative;
+  position: sticky;
+  top: 0;
+  z-index: $z-header;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-4;
+  padding: 0.7rem $container-padding-x;
+  background: $color-bg-glass-light;
+  backdrop-filter: blur($blur-strong);
+  -webkit-backdrop-filter: blur($blur-strong);
+  border-bottom: 1px solid $color-border-soft;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
 .logo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    border-radius: 9px;
-    background: linear-gradient(135deg, #0d6efd, #20c997);
-    overflow: hidden;
-    box-shadow:
-        0 8px 20px rgba(0, 0, 0, 0.18),
-        0 0 0 0.5px rgba(255, 255, 255, 0.6);
-}
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: $radius-md;
+  background: linear-gradient(135deg, $color-brand-600, $color-brand-500);
+  overflow: hidden;
+  box-shadow:
+    0 8px 20px rgba(37, 99, 235, 0.25),
+    0 0 0 1px rgba(255, 255, 255, 0.9);
 
-.logo img {
-    width: 100%;
-    height: 100%;
+  img {
+    width: 70%;
+    height: 70%;
     object-fit: contain;
+  }
 }
 
 .searchContainer {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 40%;
-    min-width: 260px;
-    max-width: 520px;
-    display: flex;
-    align-items: center;
-}
-
-.searchIcon {
-    position: absolute;
-    left: 12px;
-    width: 16px;
-    height: 16px;
-    pointer-events: none;
-    filter: brightness(0);
-    opacity: 0.8;
+  position: relative;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  max-width: clamp(240px, 50vw, 520px);
+  margin: 0 auto;
 }
 
 .searchInput {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 100%;
-    padding: 8px 12px 8px 36px;
-    border-radius: 999px;
-    border: none;
-    background: rgba(118, 118, 128, 0.12);
-    font-size: 0.95rem;
-    line-height: 1.4;
-    color: #111;
-    box-shadow: inset 0 0 0 0.5px rgba(0, 0, 0, 0.06);
-    transition:
-        background 0.25s ease,
-        box-shadow 0.25s ease,
-        transform 0.12s ease;
-    outline: none;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding: 0.55rem 1rem 0.55rem 2.4rem;
+  border-radius: $radius-pill;
+  border: 1px solid $color-border-input;
+  background: $color-input-bg;
+  font-size: $font-size-md;
+  color: $color-text-normal;
+  box-shadow: $shadow-input;
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.1s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.9);
+    border-color: rgba(148, 163, 184, 0.8);
+  }
+
+  &:focus-visible {
+    background: $color-input-bg-focus;
+    border-color: transparent;
+    transform: translateY(-0.5px);
+    @include focus-ring;
+  }
+
+  &::placeholder {
+    color: $color-text-placeholder;
+  }
 }
 
-.searchInput::placeholder {
-    color: rgba(60, 60, 67, 0.6);
+.searchIcon {
+  position: absolute;
+  z-index: 2;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 17px;
+  opacity: 0.9;
+  filter: grayscale(1) brightness(0.25) contrast(1.4);
+  pointer-events: none;
 }
-
-.searchInput:focus {
-    background: #fff;
-    box-shadow:
-        0 0 0 2px rgba(0, 122, 255, 0.35),
-        0 4px 12px rgba(0, 0, 0, 0.15);
-    border: none;
-    outline: none;
-}
-
 
 .userSide {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  white-space: nowrap;
 }
 
 .userAvatar {
-    width: 32px;
-    height: 32px;
-    border-radius: 999px;
-    object-fit: cover;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  width: 36px;
+  height: 36px;
+  border-radius: $radius-pill;
+  object-fit: cover;
+  box-shadow: $shadow-avatar;
 }
 
 .userSide p {
-    margin: 0;
-    font-size: 0.95rem;
-    color: #333;
-    font-weight: 500;
+  margin: 0;
+  font-size: $font-size-md;
+  font-weight: $font-weight-medium;
+  color: $color-text-normal;
 }
 
 .authButtonSecondary,
 .authButtonPrimary {
-    border-radius: 999px;
-    border: none;
-    padding: 6px 14px;
-    font-size: 0.8rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition:
-        background 0.18s ease,
-        box-shadow 0.18s ease,
-        transform 0.1s ease;
+  border: none;
+  border-radius: $radius-pill;
+  padding: 0.45rem 1rem;
+  font-size: $font-size-sm;
+  cursor: pointer;
+  font-weight: $font-weight-medium;
+  transition:
+    background 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.08s ease,
+    color 0.18s ease;
 }
 
 .authButtonSecondary {
-    background: transparent;
-    box-shadow: inset 0 0 0 1px rgba(120, 120, 128, 0.25);
-}
+  background: $color-bg-elevated;
+  color: $color-text-normal;
+  box-shadow: 0 0 0 1px $color-border-soft;
 
-.authButtonSecondary:hover {
-    background: rgba(120, 120, 128, 0.08);
+  &:hover {
+    background: $color-bg-subtle;
+    box-shadow: 0 0 0 1px $color-border-strong;
+  }
 }
 
 .authButtonPrimary {
-    background: #0d6efd;
-    color: #ffffff;
-    box-shadow:
-        0 4px 10px rgba(13, 110, 253, 0.35),
-        0 0 0 0.5px rgba(255, 255, 255, 0.7);
+  background: linear-gradient(120deg, $color-brand-600, $color-brand-500);
+  color: #fff;
+  box-shadow: $shadow-btn-primary-soft;
+
+  &:hover {
+    background: linear-gradient(120deg, $color-brand-700, $color-brand-600);
+    box-shadow: $shadow-btn-primary;
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: $shadow-btn-primary-soft;
+  }
 }
 
-.authButtonPrimary:hover {
-    background: #0b5ed7;
-    box-shadow:
-        0 6px 16px rgba(13, 110, 253, 0.45),
-        0 0 0 0.5px rgba(255, 255, 255, 0.9);
-    transform: translateY(-0.5px);
+@include respond-to(md) {
+  .header {
+    padding-inline: calc($container-padding-x * 0.7);
+  }
+
+  .authButtonSecondary {
+    display: none;
+  }
 }
 
-@media (max-width: 900px) {
-    .searchContainer {
-        width: 50%;
-        min-width: 220px;
-    }
-}
+@include respond-to(sm) {
+  .header {
+    gap: $space-2;
+  }
 
-@media (max-width: 768px) {
-    .header {
-        flex-wrap: wrap;
-        justify-content: space-between;
-        padding: 0.5rem 0.75rem;
-    }
+  .searchContainer {
+    max-width: 100%;
+  }
 
-    .searchContainer {
-        position: relative;
-        order: 3;
-        width: 100%;
-        max-width: none;
-        left: auto;
-        transform: none;
-        margin-top: 0.5rem;
-    }
+  .searchInput {
+    width: 100%;
+  }
 
-    .userSide {
-        order: 2;
-    }
+  .userSide {
+    gap: $space-2;
+  }
 
-    .logo {
-        order: 1;
-    }
-
-    .authButtonSecondary {
-        display: none;
-    }
-}
-
-@media (max-width: 480px) {
-    .header {
-        justify-content: center;
-    }
-
-    .userSide {
-        gap: 0.35rem;
-    }
-
-    .authButtonPrimary {
-        padding: 6px 10px;
-        font-size: 0.75rem;
-    }
+  .authButtonPrimary {
+    padding-inline: 0.7rem;
+  }
 }
