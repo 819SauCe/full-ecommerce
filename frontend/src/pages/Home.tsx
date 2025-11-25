@@ -1,5 +1,7 @@
+import Banner from "../components/Banner";
+
 function Home() {
-  return <h1>OIII!</h1>;
+  return <Banner />;
 }
 
 export default Home;

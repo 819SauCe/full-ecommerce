@@ -17,9 +17,24 @@ var RedisPass string
 var Rabbitmq_uri string
 
 func Load() {
-	err := godotenv.Load("../../../.env")
+	paths := []string{
+		"./.env",
+		"../.env",
+		"../../.env",
+		"../../../.env",
+		"../../../../.env",
+	}
+
+	var err error
+	for _, p := range paths {
+		err = godotenv.Load(p)
+		if err == nil {
+			break
+		}
+	}
+
 	if err != nil {
-		log.Fatal("Error on get .env file!")
+		log.Fatal("Error loading .env file!")
 	}
 
 	//POSTGRES
