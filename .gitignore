@@ -5,3 +5,5 @@ node_modules
 */build-erros.log
 .vscode
 tmp
+.env
+*/.env
